@@ -6,14 +6,14 @@ $mis_colores = $_SESSION['ncolores'];
 $mis_circulos = $_SESSION['ncirculos']; 
 
 $negro=array(
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000'
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000'
 );
 
 $colores_disponibles = array_slice($negro, 0, $ncolores);
