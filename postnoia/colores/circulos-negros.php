@@ -3,6 +3,7 @@ include 'pintar-circulos.php';
 
     $ncolores = (int) $_POST['ncolores'];
     $ncirculos = (int) $_POST['ncirculos']; 
+    $patron = json_decode($_POST['patron'], true); 
     
 $negro=array(
      '#000000',
@@ -27,11 +28,10 @@ $colores_disponiblesnegros = array_slice($negro, 0, $ncirculos);
     </head>
     <body>
         <h1>Jugamos al simon</h1>
-        <?php pintar_circulos($negro); 
-         echo '<form action="formulario.html" method="post">'; 
-         echo '<button type="submit" name="Volver">No me gusta el patron</button>';
-         echo '</form>'; 
-         echo $ncirculos?>
+        <?php pintar_circulos($colores_disponiblesnegros); ?>
+        <form action="formulario.html" method="post">
+        <button type="submit" name="Volver">No me gusta el patron</button>
+        </form>     
 
 
     </body>

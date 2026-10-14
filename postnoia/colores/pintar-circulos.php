@@ -1,11 +1,7 @@
 <?php
     //1azul(#0000FF), 2rojo (#ff0000), 3verde(#008000), 4amarillo(#FFDE21), 5naranja(#FFA800), 6rosa(#FFB5C0), 7morado(#9D00FF) y 8gris(#D3D3D3). 
     //FORMULARIO CON NIVEL DE DIFICULTAD: N DE CIRCULOS Y N DE COLORES.(4-8) Y DESPUES LOS BOTONES DE CADA COLOR.  
-    //html para pintar circulo  
-    // <svg width="200" height="200">  
-    // <circle cx="100" cy="100" r="50" fill="#e74c3c" />  
-    // </svg>  
-    //$patron_json = json_encode($patron);
+    //
    
     $colores=array(
         'azul'=> '#0000FF',  
@@ -24,28 +20,30 @@
     
 // Seleccionar los colores disponibles
 
-$colores_disponibles = array_slice($colores, 0, $ncolores);
+    $colores_disponibles = array_slice($colores, 0, $ncolores);
 
 // Crear el patrón aleatorio
-$patron = array();
+    $patron = array();
 
-for ($i = 0; $i < $ncirculos; $i++) {
-    $posicion = array_rand($colores_disponibles);
-    $patron[] = $colores_disponibles[$posicion];
-}
+    for ($i = 0; $i < $ncirculos; $i++) {
+        $posicion = array_rand($colores_disponibles);
+        $patron[] = $colores_disponibles[$posicion];
+    }
 
 // Función para pintar los círculos
-function pintar_circulos(array $colores) {    
-    echo "<table>";
-    foreach ($colores as $color) {
-        echo "<tr>";
-        echo "<svg width='60' height='45'>";
-        echo "<circle cx='30' cy='22.5' r='22.5' fill='$color' />";
-        echo "</svg>";
-        echo "</tr>";
+    function pintar_circulos(array $colores) {    
+        echo "<table>";
+        foreach ($colores as $color) {
+            echo "<tr>";
+            echo "<svg width='60' height='45'>";
+            echo "<circle cx='30' cy='22.5' r='22.5' fill='$color' />";
+            echo "</svg>";
+            echo "</tr>";
+        }
+        echo "</table>";
     }
-    echo "</table>";
-}
+
+    $patron_json = json_encode($patron);
 ?> 
 
 <!DOCTYPE html>
@@ -57,17 +55,16 @@ function pintar_circulos(array $colores) {
     </head>
     <body>
         <h1>Jugamos al simon</h1>
-        <?php pintar_circulos($patron); ?>
-        <input type="hidden" name="ncolores" value="<?php echo $ncolores; ?>"> 
-        <input type="hidden" name="ncirculos" value="<?php echo (int)$_POST['ncirculos']; ?>">
+        <?php pintar_circulos($patron); ?>        
         <form action="formulario.html" method="post">
-        <button type="submit" name="Volver">No me gusta el patron</button>
+            <button type="submit" name="Volver">No me gusta el patron</button>
         </form>
         <form action="circulos-negros.php" method="post">
-        <button type="submit" name="negro">Empecemos</button>
+            <input type="hidden" name="ncolores" value="<?= $ncolores ?>">
+            <input type="hidden" name="ncirculos" value="<?= $ncirculos ?>">
+            <input type="hidden" name="patron" value="<?php echo $patron_json; ?>">
+            <button type="submit" name="negro">Empecemos</button>
         </form>
-
-
     </body>
 </html>
 
