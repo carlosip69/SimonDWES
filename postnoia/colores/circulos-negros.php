@@ -1,22 +1,21 @@
 <?php
 include 'pintar-circulos.php';
-session_start();
 
-$mis_colores = $_SESSION['ncolores'];
-$mis_circulos = $_SESSION['ncirculos']; 
-
+    $ncolores = (int) $_POST['ncolores'];
+    $ncirculos = (int) $_POST['ncirculos']; 
+    
 $negro=array(
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000',
-    'negro'=> '#000000'
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000',
+     '#000000'
 );
 
-$colores_disponibles = array_slice($negro, 0, $ncolores);
+$colores_disponiblesnegros = array_slice($negro, 0, $ncirculos);
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +30,8 @@ $colores_disponibles = array_slice($negro, 0, $ncolores);
         <?php pintar_circulos($negro); 
          echo '<form action="formulario.html" method="post">'; 
          echo '<button type="submit" name="Volver">No me gusta el patron</button>';
-         echo '</form>'; ?>
+         echo '</form>'; 
+         echo $ncirculos?>
 
 
     </body>

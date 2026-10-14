@@ -6,9 +6,7 @@
     // <circle cx="100" cy="100" r="50" fill="#e74c3c" />  
     // </svg>  
     //$patron_json = json_encode($patron);
-    session_start();
-    $_SESSION['ncolores'] = $_POST['ncolores'];
-    $_SESSION['ncirculos'] = $_POST['ncirculos'];
+   
     $colores=array(
         'azul'=> '#0000FF',  
         'rojo'=> '#ff0000',  
@@ -20,10 +18,10 @@
         'gris'=> '#D3D3D3'  
     );   
 
-// Recoger los datos del formulario 
-$ncolores =  $_SESSION['ncolores'] ;
-$ncirculos =  $_SESSION['ncolores'] ;
-
+// Recoger los datos del formulario  
+    $ncolores = (int) $_POST['ncolores'];
+    $ncirculos = (int) $_POST['ncirculos']; 
+    
 // Seleccionar los colores disponibles
 
 $colores_disponibles = array_slice($colores, 0, $ncolores);
@@ -59,13 +57,15 @@ function pintar_circulos(array $colores) {
     </head>
     <body>
         <h1>Jugamos al simon</h1>
-        <?php pintar_circulos($patron); 
-         echo '<form action="formulario.html" method="post">'; 
-         echo '<button type="submit" name="Volver">No me gusta el patron</button>';
-         echo '</form>'; 
-        echo '<form action="circulos-negros.php" method="post">'; 
-         echo '<button type="submit" name="negro">Empecemos</button>';
-         echo '</form>'; ?>
+        <?php pintar_circulos($patron); ?>
+        <input type="hidden" name="ncolores" value="<?php echo $ncolores; ?>"> 
+        <input type="hidden" name="ncirculos" value="<?php echo (int)$_POST['ncirculos']; ?>">
+        <form action="formulario.html" method="post">
+        <button type="submit" name="Volver">No me gusta el patron</button>
+        </form>
+        <form action="circulos-negros.php" method="post">
+        <button type="submit" name="negro">Empecemos</button>
+        </form>
 
 
     </body>
