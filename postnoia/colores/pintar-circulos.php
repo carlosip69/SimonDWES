@@ -2,7 +2,7 @@
     //1azul(#0000FF), 2rojo (#ff0000), 3verde(#008000), 4amarillo(#FFDE21), 5naranja(#FFA800), 6rosa(#FFB5C0), 7morado(#9D00FF) y 8gris(#D3D3D3). 
     //FORMULARIO CON NIVEL DE DIFICULTAD: N DE CIRCULOS Y N DE COLORES.(4-8) Y DESPUES LOS BOTONES DE CADA COLOR.  
     //
-   
+    session_start();
     $colores=array(
         'azul'=> '#0000FF',  
         'rojo'=> '#ff0000',  
@@ -41,9 +41,12 @@
             echo "</tr>";
         }
         echo "</table>";
+        var_dump($colores);
     }
 
-    $patron_json = json_encode($patron);
+    $_SESSION['patron'] = $patron;
+    $_SESSION['ncolores'] = $ncolores;
+    $_SESSION['ncirculos'] = $ncirculos;
 ?> 
 
 <!DOCTYPE html>
@@ -51,7 +54,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Simon</title>
     </head>
     <body>
         <h1>Jugamos al simon</h1>
@@ -60,9 +63,9 @@
             <button type="submit" name="Volver">No me gusta el patron</button>
         </form>
         <form action="circulos-negros.php" method="post">
-            <input type="hidden" name="ncolores" value="<?= $ncolores ?>">
-            <input type="hidden" name="ncirculos" value="<?= $ncirculos ?>">
-            <input type="hidden" name="patron" value="<?php echo $patron_json; ?>">
+            <input type="hidden" name="ncolores" value="<?=  $_SESSION['ncolores'] ?>">
+            <input type="hidden" name="ncirculos" value="<?=  $_SESSION['ncirculos'] ?>">
+            <input type="hidden" name="patron" value="<?php echo $_SESSION['patron']; ?>">
             <button type="submit" name="negro">Empecemos</button>
         </form>
     </body>
