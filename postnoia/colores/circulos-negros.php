@@ -1,5 +1,5 @@
 <?php
-require 'pintar-circulos.php';
+include 'funcion-color.php';
 
 $negro=array(
      '#000000',
@@ -28,8 +28,8 @@ $colores_disponiblesnegros = array_slice($negro, 0, $_SESSION['ncirculos']);
             <?php pintar_circulos($colores_disponiblesnegros);
             for($i=0;$i<$_SESSION['ncolores'];$i++){
            echo '<button style="background-color: '
-            . $_SESSION['patron'][$i]
-            . '; color: white;">si</button>';
+            . $_SESSION['hexaColores'][$i]
+            . '; color: white;">'.$_SESSION['nombreColores'][$i].'</button>';
             }?>
         </div>
         <form action="formulario.html" method="post">            
