@@ -47,18 +47,36 @@ $colores_disponiblesnegros = array_slice($negro, 0, $_SESSION['ncirculos']);
                 echo '<button style="background-color: '
                 . $_SESSION['hexaColores'][$i]
                 . '; color: white;" id="'
-                . $_SESSION['hexaColores'][$i]
+                . $_SESSION['nombreColores'][$i]
                 . '">'
                 . $_SESSION['nombreColores'][$i]
                 . '</button>';
                 }
-                switch ($variable) {
-                    case 'value':
-                        # code...
+                switch (//id del boton
+                    ) {
+                    case 'azul':
+                        $colores_disponiblesnegros[$j]='#0000FF'
                         break;
-                    
-                    default:
-                        # code...
+                    case 'rojo':
+                        $colores_disponiblesnegros[$j]='#ff0000'
+                        break;
+                    case 'verde':
+                        $colores_disponiblesnegros[$j]='#008000'
+                        break;
+                    case 'amarillo':
+                        $colores_disponiblesnegros[$j]='#FFDE21'
+                        break;
+                    case 'naranja':
+                        $colores_disponiblesnegros[$j]='#FFA800'
+                        break;
+                    case 'rosa':
+                        $colores_disponiblesnegros[$j]='#FFB5C0'
+                        break;
+                    case 'morado':
+                        $colores_disponiblesnegros[$j]='#9D00FF'
+                        break;
+                    case 'gris':
+                        $colores_disponiblesnegros[$j]='#D3D3D3'
                         break;
                 }
                 $j++
