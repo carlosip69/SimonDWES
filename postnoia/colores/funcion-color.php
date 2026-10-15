@@ -15,27 +15,25 @@
         'gris'=> '#D3D3D3'  
     ); 
 
-// Recoger los datos del formulario  
-    $ncolores = (int) $_POST['ncolores'];
-    $ncirculos = (int) $_POST['ncirculos']; 
 
+// Recoger los datos del formulario y metemos las variables de numeros de colores y circulos en el $_SESSION
+    if (isset($_POST['ncolores']) && isset($_POST['ncirculos'])) {
+    $_SESSION['ncolores'] = (int) $_POST['ncolores'];
+    $_SESSION['ncirculos'] = (int) $_POST['ncirculos'];
+    }
 
 //Meto la key en un array y los colores en otro para los botones dentro del dolra session
-    $_SESSION['nombreColores']=array_slice(array_keys($colores), 0, $ncolores);
-    $_SESSION['hexaColores']=array_slice(array_values($colores), 0, $ncolores);
-
-//metemos las variables de numeros de colores y circulos en el $_SESSION
-    $_SESSION['ncolores'] = $ncolores;
-    $_SESSION['ncirculos'] = $ncirculos;
+    $_SESSION['nombreColores']=array_slice(array_keys($colores), 0, $_SESSION['ncolores']);
+    $_SESSION['hexaColores']=array_slice(array_values($colores), 0, $_SESSION['ncolores']);
 
 // Seleccionar los colores disponibles
 
-    $colores_disponibles = array_slice($colores, 0, $ncolores);
+    $colores_disponibles = array_slice($colores, 0, $_SESSION['ncolores']);
 
 // Crear el patrón aleatorio
     $patron = array();
 
-    for ($i = 0; $i < $ncirculos; $i++) {
+    for ($i = 0; $i < $_SESSION['ncolores']; $i++) {
         $posicion = array_rand($colores_disponibles);
         $patron[] = $colores_disponibles[$posicion];
     }
