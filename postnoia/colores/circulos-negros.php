@@ -40,11 +40,28 @@ $colores_disponiblesnegros = array_slice($negro, 0, $_SESSION['ncirculos']);
     <body>
         <h1>Jugamos al simon</h1>
         <div class="contenedor-botones">
-            <?php pintar_circulos($colores_disponiblesnegros);
-            for($i=0;$i<$_SESSION['ncolores'];$i++){
-           echo '<button style="background-color: '
-            . $_SESSION['hexaColores'][$i]
-            . '; color: white;">'.$_SESSION['nombreColores'][$i].'</button>';
+            <?php $j=0;
+            while($colores_disponiblesnegros[$ultimoNumero]=='#000000'){            
+                pintar_circulos($colores_disponiblesnegros);           
+                for($i=0;$i<$_SESSION['ncolores'];$i++){
+                echo '<button style="background-color: '
+                . $_SESSION['hexaColores'][$i]
+                . '; color: white;" id="'
+                . $_SESSION['hexaColores'][$i]
+                . '">'
+                . $_SESSION['nombreColores'][$i]
+                . '</button>';
+                }
+                switch ($variable) {
+                    case 'value':
+                        # code...
+                        break;
+                    
+                    default:
+                        # code...
+                        break;
+                }
+                $j++
             }
             $colores_disponiblesnegros[0]='#ff0000ff';
             pintar_circulos($colores_disponiblesnegros);?>
