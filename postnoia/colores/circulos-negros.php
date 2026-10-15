@@ -44,16 +44,17 @@ $colores_disponiblesnegros = array_slice($negro, 0, $_SESSION['ncirculos']);
             while($colores_disponiblesnegros[$ultimoNumero]=='#000000'){            
                 pintar_circulos($colores_disponiblesnegros);           
                 for($i=0;$i<$_SESSION['ncolores'];$i++){
-                echo '<button style="background-color: '
-                . $_SESSION['hexaColores'][$i]
-                . '; color: white;" id="'
+                echo '<form method="post">';
+                echo '<button type="submit" name="color" value="'
                 . $_SESSION['nombreColores'][$i]
-                . '">'
+                . '" style="background-color: '
+                . $_SESSION['hexaColores'][$i]
+                . '; color: white;">'
                 . $_SESSION['nombreColores'][$i]
                 . '</button>';
+                echo '</form>';
                 }
-                switch (//id del boton
-                    ) {
+                switch ($_POST['color']) {
                     case 'azul':
                         $colores_disponiblesnegros[$j]='#0000FF'
                         break;
