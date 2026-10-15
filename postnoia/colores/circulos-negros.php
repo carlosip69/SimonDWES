@@ -1,33 +1,39 @@
 <?php
 include 'funcion-color.php';
 
-$negro=array(
-     '#000000',
-     '#000000',
-     '#000000',
-     '#000000',
-     '#000000',
-     '#000000',
-     '#000000',
-     '#000000'
-);
+$negro = array_fill(0, $_SESSION['ncirculos'], '#000000');
 
-function pintarNegro($color){
-
+// Guardar los círculos en la sesión la primera vez
+if (!isset($_SESSION['circulos_negros'])) {
+    $_SESSION['circulos_negros'] = $negro;
+    $_SESSION['j'] = 0;
 }
 
-$colores_disponiblesnegros = array_slice($negro, 0, $_SESSION['ncirculos']);
+// Si se pulsa un botón
+if (isset($_POST['color'])) {
+    $colores = array(
+        'azul' => '#0000FF',
+        'rojo' => '#FF0000',
+        'verde' => '#008000',
+        'amarillo' => '#FFDE21',
+        'naranja' => '#FFA800',
+        'rosa' => '#FFB5C0',
+        'morado' => '#9D00FF',
+        'gris' => '#D3D3D3'
+    );
 
-// $ultimoNumero=(count($colores_disponiblesnegros)-1);
-// //pintar el primer valor que sea negro y crear la funcion para que se pinte ese circulo
-// for($i=0;$colores_disponiblesnegros[$ultimoNumero]=='#000000';$i){
-//     if($colores_disponiblesnegros[$i]!='#000000'){
-//         $i++
-//     }else{
-        
-//     }
-// }
-    
+
+//vamos actualizando la j
+$j = $_SESSION['j'];
+
+
+if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
+        $_SESSION['circulos_negros'][$j] = $colores[$_POST['color']];
+        $_SESSION['j']++;
+    }
+}
+
+$colores_disponiblesnegros = $_SESSION['circulos_negros'];
 ?>
 
 <!DOCTYPE html>
@@ -37,56 +43,30 @@ $colores_disponiblesnegros = array_slice($negro, 0, $_SESSION['ncirculos']);
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Simon</title>
     </head>
-    <body>
+    <body>        
         <h1>Jugamos al simon</h1>
+        <?php
+            pintar_circulos($colores_disponiblesnegros);
+        ?>
         <div class="contenedor-botones">
-            <?php $j=0;
-            while($colores_disponiblesnegros[$ultimoNumero]=='#000000'){            
-                pintar_circulos($colores_disponiblesnegros);           
+            <?php                      
                 for($i=0;$i<$_SESSION['ncolores'];$i++){
                 echo '<form method="post">';
                 echo '<button type="submit" name="color" value="'
-                . $_SESSION['nombreColores'][$i]
+                . htmlspecialchars($_SESSION['nombreColores'][$i])
                 . '" style="background-color: '
-                . $_SESSION['hexaColores'][$i]
+                . htmlspecialchars($_SESSION['hexaColores'][$i])
                 . '; color: white;">'
-                . $_SESSION['nombreColores'][$i]
+                . htmlspecialchars($_SESSION['nombreColores'][$i])
                 . '</button>';
                 echo '</form>';
-                }
-                switch ($_POST['color']) {
-                    case 'azul':
-                        $colores_disponiblesnegros[$j]='#0000FF'
-                        break;
-                    case 'rojo':
-                        $colores_disponiblesnegros[$j]='#ff0000'
-                        break;
-                    case 'verde':
-                        $colores_disponiblesnegros[$j]='#008000'
-                        break;
-                    case 'amarillo':
-                        $colores_disponiblesnegros[$j]='#FFDE21'
-                        break;
-                    case 'naranja':
-                        $colores_disponiblesnegros[$j]='#FFA800'
-                        break;
-                    case 'rosa':
-                        $colores_disponiblesnegros[$j]='#FFB5C0'
-                        break;
-                    case 'morado':
-                        $colores_disponiblesnegros[$j]='#9D00FF'
-                        break;
-                    case 'gris':
-                        $colores_disponiblesnegros[$j]='#D3D3D3'
-                        break;
-                }
-                $j++
-            }
-            $colores_disponiblesnegros[0]='#ff0000ff';
-            pintar_circulos($colores_disponiblesnegros);?>
+                }                
+            ?>
         </div>
-        <form action="formulario.html" method="post">            
-            <button type="submit" name="Volver">Atras</button>            
-        </form>
+        <div>
+            <form action="formulario.html" method="post">            
+                <button type="submit" name="Volver">Atras</button>            
+            </form>
+        </div>
     </body>
 </html>
