@@ -5,7 +5,7 @@
 
     $colores=array(
         'azul'=> '#0000FF',  
-        'rojo'=> '#ff0000',  
+        'rojo'=> '#FF0000',  
         'verde'=> '#008000',  
         'amarillo'=> '#FFDE21',  
         'naranja'=> '#FFA800',  
