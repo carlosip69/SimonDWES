@@ -1,41 +1,42 @@
 <?php
-include 'funcion-color.php';
+    include 'funcion-color.php';
 
-$negro = array_fill(0, $_SESSION['ncirculos'], '#000000');
-
-
-// Guardar los círculos en la sesión la primera vez
-if (!isset($_SESSION['circulos_negros'])) {
-    $_SESSION['circulos_negros'] = $negro;
-    $_SESSION['j'] = 0;
-}
-
-// Si se pulsa un botón
-if (isset($_POST['color'])) {
-    $colores = array(
-        'azul' => '#0000FF',
-        'rojo' => '#FF0000',
-        'verde' => '#008000',
-        'amarillo' => '#FFDE21',
-        'naranja' => '#FFA800',
-        'rosa' => '#FFB5C0',
-        'morado' => '#9D00FF',
-        'gris' => '#D3D3D3'
-    );
+    //Crea el array con tantos negros como circulos dijo el usuario
+    $negro = array_fill(0, $_SESSION['ncirculos'], '#000000');
 
 
-//vamos actualizando la j
-$j = $_SESSION['j'];
-
-
-if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
-        $_SESSION['circulos_negros'][$j] = $colores[$_POST['color']];
-        $_SESSION['j']++;
+    // Guardar los círculos en la sesión la primera vez
+    if (!isset($_SESSION['circulos_negros'])) {
+        $_SESSION['circulos_negros'] = $negro;
+        $_SESSION['j'] = 0;
     }
-}
 
-$colores_disponiblesnegros = $_SESSION['circulos_negros'];
-?>
+    // Si se pulsa un botón
+    if (isset($_POST['color'])) {
+        $colores = array(
+            'azul' => '#0000FF',
+            'rojo' => '#FF0000',
+            'verde' => '#008000',
+            'amarillo' => '#FFDE21',
+            'naranja' => '#FFA800',
+            'rosa' => '#FFB5C0',
+            'morado' => '#9D00FF',
+            'gris' => '#D3D3D3'
+        );
+
+
+    //vamos actualizando la j
+    $j = $_SESSION['j'];
+
+    // por si pulsa los botones despues de comprobar
+    if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
+            $_SESSION['circulos_negros'][$j] = $colores[$_POST['color']];
+            $_SESSION['j']++;
+        }
+    }
+
+    $colores_disponiblesnegros = $_SESSION['circulos_negros'];
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
