@@ -55,11 +55,11 @@
                 for($i=0;$i<$_SESSION['ncolores'];$i++){
                 echo '<form method="post">';
                 echo '<button type="submit" name="color" value="'
-                . htmlspecialchars($_SESSION['nombreColores'][$i])
+                . $_SESSION['nombreColores'][$i]
                 . '" style="background-color: '
-                . htmlspecialchars($_SESSION['hexaColores'][$i])
+                . $_SESSION['hexaColores'][$i]
                 . '; color: white;">'
-                . htmlspecialchars($_SESSION['nombreColores'][$i])
+                . $_SESSION['nombreColores'][$i]
                 . '</button>';                       
                 }
                 echo '</form>';                
