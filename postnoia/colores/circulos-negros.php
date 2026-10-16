@@ -3,6 +3,7 @@ include 'funcion-color.php';
 
 $negro = array_fill(0, $_SESSION['ncirculos'], '#000000');
 
+
 // Guardar los círculos en la sesión la primera vez
 if (!isset($_SESSION['circulos_negros'])) {
     $_SESSION['circulos_negros'] = $negro;
@@ -49,7 +50,7 @@ $colores_disponiblesnegros = $_SESSION['circulos_negros'];
             pintar_circulos($colores_disponiblesnegros);
         ?>
         <div class="contenedor-botones">
-            <?php                      
+            <?php if($_SESSION['j']<$_SESSION['ncirculos']) {                    
                 for($i=0;$i<$_SESSION['ncolores'];$i++){
                 echo '<form method="post">';
                 echo '<button type="submit" name="color" value="'
@@ -58,15 +59,32 @@ $colores_disponiblesnegros = $_SESSION['circulos_negros'];
                 . htmlspecialchars($_SESSION['hexaColores'][$i])
                 . '; color: white;">'
                 . htmlspecialchars($_SESSION['nombreColores'][$i])
-                . '</button>';
+                . '</button>';                       
+                }
+                echo '</form>';                
+                echo '<form action="formulario.html" method="post">';            
+                    echo '<button type="submit" name="Volver">Atras</button>';            
+                echo '</form>'; 
+            }else if($colores_disponiblesnegros==$_SESSION['patron']){
+                echo'<h2>¡¡Has Ganado!!</h2>';
+                $_SESSION['circulos_negros']=$negro;
+                $_SESSION['j'] = 0;
+                session_destroy();
+                echo '<form action="formulario.html" method="post">';            
+                    echo '<button type="submit" name="Volver">Atras</button>';            
                 echo '</form>';
-                }                
+            }else{
+                echo'<h2>¡¡Has Perdido!! La combinacion era:</h2>';
+                pintar_circulos($_SESSION['patron']);
+                $_SESSION['circulos_negros']=$negro;
+                $_SESSION['j'] = 0;
+                session_destroy();
+                echo '<form action="formulario.html" method="post">';            
+                    echo '<button type="submit" name="Volver">Atras</button>';            
+                echo '</form>';
+
+            }                
             ?>
-        </div>
-        <div>
-            <form action="formulario.html" method="post">            
-                <button type="submit" name="Volver">Atras</button>            
-            </form>
-        </div>
+        </div>        
     </body>
 </html>

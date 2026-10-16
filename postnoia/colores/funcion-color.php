@@ -1,7 +1,6 @@
 <?php
     //1azul(#0000FF), 2rojo (#ff0000), 3verde(#008000), 4amarillo(#FFDE21), 5naranja(#FFA800), 6rosa(#FFB5C0), 7morado(#9D00FF) y 8gris(#D3D3D3). 
     //FORMULARIO CON NIVEL DE DIFICULTAD: N DE CIRCULOS Y N DE COLORES.(4-8) Y DESPUES LOS BOTONES DE CADA COLOR.  
-    
     session_start();
 
     $colores=array(
@@ -33,7 +32,7 @@
 // Crear el patrón aleatorio
     $patron = array();
 
-    for ($i = 0; $i < $_SESSION['ncolores']; $i++) {
+    for ($i = 0; $i < $_SESSION['ncirculos']; $i++) {
         $posicion = array_rand($colores_disponibles);
         $patron[] = $colores_disponibles[$posicion];
     }
