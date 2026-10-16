@@ -10,7 +10,6 @@
         $_SESSION['circulos_negros'] = $negro;
         $_SESSION['j'] = 0;
     }
-
     // Si se pulsa un botón
     if (isset($_POST['color'])) {
         $colores = array(
@@ -32,13 +31,22 @@
         if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
             $_SESSION['circulos_negros'][$j] = $colores[$_POST['color']];
             $_SESSION['j']++;
-        }
-
-        
+        }        
     }
     
 
     $colores_disponiblesnegros = $_SESSION['circulos_negros'];
+
+    // 
+    // session_start();
+
+    // $_SESSION = [];
+
+    // session_destroy();
+
+    // // Volver al formulario inicial
+    // header("Location: formulario.html");
+    // exit;
     ?>
 
 <!DOCTYPE html>
@@ -92,3 +100,4 @@
         </div>        
     </body>
 </html>
+
