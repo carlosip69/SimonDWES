@@ -29,11 +29,14 @@
     $j = $_SESSION['j'];
 
     // por si pulsa los botones despues de comprobar
-    if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
+        if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
             $_SESSION['circulos_negros'][$j] = $colores[$_POST['color']];
             $_SESSION['j']++;
         }
+
+        
     }
+    
 
     $colores_disponiblesnegros = $_SESSION['circulos_negros'];
     ?>
