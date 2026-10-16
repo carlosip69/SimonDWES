@@ -71,7 +71,7 @@ $colores_disponiblesnegros = $_SESSION['circulos_negros'];
                 $_SESSION['j'] = 0;
                 session_destroy();
                 echo '<form action="formulario.html" method="post">';            
-                    echo '<button type="submit" name="Volver">Atras</button>';            
+                    echo '<button type="submit" name="Volver">Jugar de nuevo</button>';            
                 echo '</form>';
             }else{
                 echo'<h2>¡¡Has Perdido!! La combinacion era:</h2>';
@@ -80,7 +80,7 @@ $colores_disponiblesnegros = $_SESSION['circulos_negros'];
                 $_SESSION['j'] = 0;
                 session_destroy();
                 echo '<form action="formulario.html" method="post">';            
-                    echo '<button type="submit" name="Volver">Atras</button>';            
+                    echo '<button type="submit" name="Volver">Jugar de nuevo</button>';            
                 echo '</form>';
 
             }                

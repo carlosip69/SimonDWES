@@ -48,7 +48,6 @@
             echo "</tr>";
         }
         echo "</table>";
-        var_dump($colores_disponibles);
         return $colores_disponibles;
     }
 ?>
