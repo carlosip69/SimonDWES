@@ -34,6 +34,8 @@
         }        
     }
     
+    //numero de aciertos
+    if()
 
     $colores_disponiblesnegros = $_SESSION['circulos_negros'];
 
