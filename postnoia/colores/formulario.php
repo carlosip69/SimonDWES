@@ -13,19 +13,21 @@
       'samesite' => 'Lax' // Protección Anti-CSRF
     ]);
 
+   if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['cokki_fondo'])){
      // Creación de una cookie segura en PHP 7.3+ / PHP 8+
-  $nombreCookie = 'cokki_fondo';
-  $valorCookie = isset($_POST['cokki_fondo']);
-  $tiempoExpiracion = time() + (86400 * 30); // 30 días de duración
+      $nombreCookie = 'cokki_fondo';
+      $valorCookie = $_POST['cokki_fondo'] ?? 'white';
+      $tiempoExpiracion = time() + (86400 * 30); // 30 días de duración
 
-    setcookie($nombreCookie, $valorCookie, [
-      'expires' => $tiempoExpiracion,
-      'path' => '/',
-      'domain' => 'localhost',
-      'secure' => false, // Poner true en producción con HTTPS
-      'httponly' => true, // Inaccesible desde JavaScript (Protección Anti-XSS)
-      'samesite' => 'Lax' // Protección Anti-CSRF
-    ]);
+        setcookie($nombreCookie, $valorCookie, [
+          'expires' => $tiempoExpiracion,
+          'path' => '/',
+          'domain' => 'localhost',
+          'secure' => false, // Poner true en producción con HTTPS
+          'httponly' => true, // Inaccesible desde JavaScript (Protección Anti-XSS)
+          'samesite' => 'Lax' // Protección Anti-CSRF
+        ]);
+    }
 
 ?>
 
@@ -39,17 +41,17 @@
 
   <body>
     <h1>Bienvenido al Simon</h1>
-    <form action="pintar-circulos.php" method="post">
+    <form action="pintar-circulos.php" method="POST">
       <label for="ncolores">¿Número de colores?</label>
-      <input id="ncolores" name="ncolores" type="number" min="4" max="8" value="<?php echo $_COOKIE['cokki_circulos']?>" required/>
+      <input id="ncolores" name="ncolores" type="number" min="4" max="8" value="4" required/>
       <br /><br />
 
       <label for="ncirculos">¿Número de círculos?</label>
-      <input id="ncirculos" name="ncirculos" type="number" min="4" max="8" value="4" required/>
+      <input id="ncirculos" name="ncirculos" type="number" min="4" max="8" value="<?php echo $_COOKIE['cokki_circulos'];?>" required/>
       <br /><br />
 
-      <label for="colorfondo">Color de fondo</label>
-      <input id=colorfondo name="colorfondo" type="text"/>
+      <label for="cokki_fondo">Color de fondo</label>
+      <input id=cokki_fondo name="cokki_fondo" type="text"/>
       
       <br /><br />
       <button type="submit">Vamos a jugar</button>

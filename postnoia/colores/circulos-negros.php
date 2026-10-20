@@ -35,7 +35,7 @@
     }
     
     //numero de aciertos
-    if()
+    //if()
 
     $colores_disponiblesnegros = $_SESSION['circulos_negros'];
 
@@ -58,7 +58,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Simon</title>
     </head>
-    <body>        
+    <body style="background-color:<?php echo $_COOKIE['cokki_fondo'];?>">        
         <h1>Jugamos al simon</h1>
         <?php
             pintar_circulos($colores_disponiblesnegros);
@@ -76,7 +76,7 @@
                 . '</button>';                       
                 }
                 echo '</form>';                
-                echo '<form action="formulario.html" method="post">';            
+                echo '<form action="formulario.php" method="post">';            
                     echo '<button type="submit" name="Volver">Atras</button>';            
                 echo '</form>'; 
             }else if($colores_disponiblesnegros==$_SESSION['patron']){
@@ -93,7 +93,7 @@
                 $_SESSION['circulos_negros']=$negro;
                 $_SESSION['j'] = 0;
                 session_destroy();
-                echo '<form action="formulario.html" method="post">';            
+                echo '<form action="formulario.php" method="post">';            
                     echo '<button type="submit" name="Volver">Jugar de nuevo</button>';            
                 echo '</form>';
 
