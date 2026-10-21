@@ -1,17 +1,25 @@
 <?php
     $_usuario='pepe';
     $_contra='abc';
-    $_errMsg=" ";
+    $_contra_hash=password_hash($_contra, PASSWORD_DEFAULT);
+    $_errMsg=" ";    
+
+    $user="root"
+    $password=" ";
+    $dbname="agenda";
+    $host="localhost";
+
+    
 
     if($_SERVER['REQUEST_METHOD']==='POST'){
         $usua=$_POST['usuario'];
         $password=$_POST['password'];
 
-        if($_usuario===$usua && $_contra===$password){
+        if($_usuario===$usua && password_verify($password, $_contra_hash)){
             header("Location: ./formulario.php");
             die;
-        }else{
-            $_errMsg="Usuario o Contraseña incorrecta";
+        }else{            
+            $_errMsg="Usuario y/o Contraseña incorrecta";   
         }
     }
 ?>
@@ -21,7 +29,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Acceso</title>
 </head>
 <body>
     <h1>Registrese</h1>
@@ -35,5 +43,6 @@
       <button type="submit">Entrar</button>
       <br /><br />
       <?php echo $_errMsg ?>
+      
 </body>
 </html>
