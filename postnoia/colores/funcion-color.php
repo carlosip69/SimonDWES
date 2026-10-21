@@ -43,7 +43,7 @@
         foreach ($colores_disponibles as $color) {
             echo "<tr>";
             echo "<svg width='60' height='45'>";
-            echo "<circle cx='30' cy='22.5' r='22.5' fill='$color' />";
+            echo "<circle stroke='black' stroke-width='2' cx='30' cy='22.5' r='22.5' fill='$color' />";
             echo "</svg>";
             echo "</tr>";
         }
