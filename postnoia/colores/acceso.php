@@ -32,18 +32,18 @@
 
     //insertamos datos
 
-    // 1. Sentencia con marcadores nominales
-    $sql = "INSERT INTO usuarios (nombre, email, nota) VALUES (:nom, :mail, :nota)";
-    $stmt = $pdo->prepare($sql);
-    // 2. Ejecución pasando el mapa de valores
-    $stmt->execute([
-    ':nom' => $nombreNuevo,
-    ':mail' => $emailNuevo,
-    ':nota' => $notaNueva
-    ]);
-    // 3. Obtener el ID generado por el AUTO_INCREMENT
-    $idGenerado = $pdo->lastInsertId();
-    echo "Alumno insertado con éxito con el ID asignado: " . $idGenerado;
+    // // 1. Sentencia con marcadores nominales
+    // $sql = "INSERT INTO usuarios (nombre, email, nota) VALUES (:nom, :mail, :nota)";
+    // $stmt = $pdo->prepare($sql);
+    // // 2. Ejecución pasando el mapa de valores
+    // $stmt->execute([
+    // ':nom' => $nombreNuevo,
+    // ':mail' => $emailNuevo,
+    // ':nota' => $notaNueva
+    // ]);
+    // // 3. Obtener el ID generado por el AUTO_INCREMENT
+    // $idGenerado = $pdo->lastInsertId();
+    // echo "Alumno insertado con éxito con el ID asignado: " . $idGenerado;
 
 
     // 4. Cierre explícito de cursor y conexión
@@ -72,7 +72,7 @@
     <title>Acceso</title>
 </head>
 <body>
-    <h1>Registrese</h1>
+    <h1>Iniciar Sesion</h1>
     <form action="" method="POST">
       <label for="usuario">Usuario</label>
       <input id="usuario" name="usuario" type="text" required/>
@@ -81,6 +81,11 @@
       <input id="password" name="password" type="password" required/>      
       <br /><br />
       <button type="submit">Entrar</button>
+    </form>
+    <form action="registrase.php">
+        <p>¿No tienes cuenta?</p>                 
+        <button type="submit">Registrarse</button>
+    </form>    
       <br /><br />
       <?php echo $_errMsg ?>
       
