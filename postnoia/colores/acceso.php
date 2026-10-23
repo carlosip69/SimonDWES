@@ -4,11 +4,51 @@
     $_contra_hash=password_hash($_contra, PASSWORD_DEFAULT);
     $_errMsg=" ";    
 
-    $user="root"
-    $password=" ";
+    // Parámetros de conexión a base de datos
+    $user="root";
+    $password="";
     $dbname="agenda";
     $host="localhost";
 
+    // 1. Cadena de conexión (DSN) e instanciación directa de PDO
+    $dsn = "mysql:host=localhost;dbname=agenda;charset=utf8mb4";
+    $pdo = new PDO($dsn, "root", "");
+
+    // Preparar la consulta con marcador nominal :notaMin
+    $sql = "SELECT Codigo, Nombre, Clave, Rol FROM usuarios";
+    $stmt = $pdo->prepare($sql);
+
+    // 2. Ejecutar pasando los valores en un array asociativo
+     $stmt->execute();
+
+    // 3. Recorrido y visualización de resultados en pantalla
+    echo "<table border='1'>";
+    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {        
+        echo "<tr>";
+        echo "<td>" . $fila['Codigo'] . "</td>" . "<td>" . $fila['Nombre'] . "</td>" . "<td>" . $fila['Clave'] . "</td>";  
+        echo "</tr>";     
+    }
+    echo "</table>";
+
+    //insertamos datos
+
+    // 1. Sentencia con marcadores nominales
+    $sql = "INSERT INTO usuarios (nombre, email, nota) VALUES (:nom, :mail, :nota)";
+    $stmt = $pdo->prepare($sql);
+    // 2. Ejecución pasando el mapa de valores
+    $stmt->execute([
+    ':nom' => $nombreNuevo,
+    ':mail' => $emailNuevo,
+    ':nota' => $notaNueva
+    ]);
+    // 3. Obtener el ID generado por el AUTO_INCREMENT
+    $idGenerado = $pdo->lastInsertId();
+    echo "Alumno insertado con éxito con el ID asignado: " . $idGenerado;
+
+
+    // 4. Cierre explícito de cursor y conexión
+    $stmt = null;
+    $pdo = null;
     
 
     if($_SERVER['REQUEST_METHOD']==='POST'){

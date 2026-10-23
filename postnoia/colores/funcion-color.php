@@ -41,11 +41,11 @@
     function pintar_circulos(array $colores_disponibles) {    
         echo "<table>";
         foreach ($colores_disponibles as $color) {
-            echo "<tr>";
+            echo "<td>";
             echo "<svg width='60' height='45'>";
             echo "<circle stroke='black' stroke-width='2' cx='28' cy='20.5' r='20.5' fill='$color' />";
             echo "</svg>";
-            echo "</tr>";
+            echo "</td>";
         }
         echo "</table>";
         return $colores_disponibles;
