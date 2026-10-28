@@ -7,11 +7,11 @@
     // Parámetros de conexión a base de datos
     $user="root";
     $password="";
-    $dbname="agenda";
+    $dbname="bdsimon";
     $host="localhost";
 
     // 1. Cadena de conexión (DSN) e instanciación directa de PDO
-    $dsn = "mysql:host=localhost;dbname=agenda;charset=utf8mb4";
+    $dsn = "mysql:host=localhost;dbname=bdsimon;charset=utf8mb4";
     $pdo = new PDO($dsn, "root", "");
 
     // Preparar la consulta con marcador nominal :notaMin
@@ -22,13 +22,13 @@
      $stmt->execute();
 
     // 3. Recorrido y visualización de resultados en pantalla
-    echo "<table border='1'>";
-    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {        
-        echo "<tr>";
-        echo "<td>" . $fila['Codigo'] . "</td>" . "<td>" . $fila['Nombre'] . "</td>" . "<td>" . $fila['Clave'] . "</td>";  
-        echo "</tr>";     
-    }
-    echo "</table>";
+    // echo "<table border='1'>";
+    // while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {        
+    //     echo "<tr>";
+    //     echo "<td>" . $fila['Codigo'] . "</td>" . "<td>" . $fila['Nombre'] . "</td>" . "<td>" . $fila['Clave'] . "</td>";  
+    //     echo "</tr>";     
+    // }
+    // echo "</table>";
 
     //insertamos datos
 

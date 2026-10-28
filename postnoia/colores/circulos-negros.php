@@ -99,6 +99,7 @@
 
             }                
             ?>
+            <p>Progreso: <?php echo $_SESSION['j']; ?> de <?php echo $_SESSION['ncirculos']; ?> circulos completados </p>
         </div>        
     </body>
 </html>
