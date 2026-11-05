@@ -26,21 +26,18 @@
   </head>
 
   <body>
-    <h1>Bienvenido al Simon</h1>
-    <form action="pintar-circulos.php" method="POST">
+    <h2>Panel de administrador</h2>
+    <form action="" method="POST">
       <label for="ncolores">¿Número de colores?</label>
       <input id="ncolores" name="ncolores" type="number" min="4" max="8" value="4" required/>
       <br /><br />
-
       <label for="ncirculos">¿Número de círculos?</label>
-      <input id="ncirculos" name="ncirculos" type="number" min="4" max="8" value="<?php echo $_COOKIE['cokki_circulos'];?>" required/>
+      <input id="ncirculos" name="ncirculos" type="number" min="4" max="8" value="4" required/>
       <br /><br />
-
       <label for="cokki_fondo">Color de fondo</label>
-      <input id=cokki_fondo name="cokki_fondo" type="text"/>
-      
+      <input id=cokki_fondo name="cokki_fondo" type="text"/>      
       <br /><br />
-      <button type="submit">Vamos a jugar</button>
+      <button type="submit">Guardar configuracion</button>
     </form>
   </body>
 </html>
