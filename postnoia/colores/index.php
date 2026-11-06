@@ -1,93 +1,68 @@
 <?php
-    $_usuario='pepe';
-    $_contra='abc';
-    $_contra_hash=password_hash($_contra, PASSWORD_DEFAULT);
-    $_errMsg=" ";    
+session_start();
 
-    // Parámetros de conexión a base de datos
-    $user="root";
-    $password="";
-    $dbname="bdsimon";
-    $host="localhost";
+$_errMsg = "";
 
-    // 1. Cadena de conexión (DSN) e instanciación directa de PDO
-    $dsn = "mysql:host=localhost;dbname=bdsimon;charset=utf8mb4";
-    $pdo = new PDO($dsn, "root", "");
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $usua = trim($_POST['usuario'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
-    // Preparar la consulta con marcador nominal :notaMin
-    $sql = "SELECT Codigo, Nombre, Clave, Rol FROM usuarios";
-    $stmt = $pdo->prepare($sql);
+    if (!empty($usua) && !empty($password)) {
+        try {
+            $dsn = "mysql:host=localhost;dbname=bdsimon;charset=utf8mb4";
+            $pdo = new PDO($dsn, "root", "", [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]);
 
-    // 2. Ejecutar pasando los valores en un array asociativo
-     $stmt->execute();
+            $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE Nombre = ? AND Clave = ?");
+            $stmt->execute([$usua, $password]);
+            $usuario = $stmt->fetch();
 
-    // 3. Recorrido y visualización de resultados en pantalla
-    // echo "<table border='1'>";
-    // while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {        
-    //     echo "<tr>";
-    //     echo "<td>" . $fila['Codigo'] . "</td>" . "<td>" . $fila['Nombre'] . "</td>" . "<td>" . $fila['Clave'] . "</td>";  
-    //     echo "</tr>";     
-    // }
-    // echo "</table>";
+            if ($usuario) {
+                $_SESSION['usuario_id'] = $usuario['Codigo'];
+                $_SESSION['nombre']     = $usuario['Nombre'];
+                $_SESSION['rol']        = $usuario['Rol'];
 
-    //insertamos datos
-
-    // // 1. Sentencia con marcadores nominales
-    // $sql = "INSERT INTO usuarios (nombre, email, nota) VALUES (:nom, :mail, :nota)";
-    // $stmt = $pdo->prepare($sql);
-    // // 2. Ejecución pasando el mapa de valores
-    // $stmt->execute([
-    // ':nom' => $nombreNuevo,
-    // ':mail' => $emailNuevo,
-    // ':nota' => $notaNueva
-    // ]);
-    // // 3. Obtener el ID generado por el AUTO_INCREMENT
-    // $idGenerado = $pdo->lastInsertId();
-    // echo "Alumno insertado con éxito con el ID asignado: " . $idGenerado;
-
-
-    // 4. Cierre explícito de cursor y conexión
-    $stmt = null;
-    $pdo = null;
-    
-
-    if($_SERVER['REQUEST_METHOD']==='POST'){
-        $usua=$_POST['usuario'];
-        $password=$_POST['password'];
-
-        if($_usuario===$usua && password_verify($password, $_contra_hash)){
-            header("Location: ./formulario.php");
-            die;
-        }else{            
-            $_errMsg="Usuario y/o Contraseña incorrecta";   
+                if ($usuario['Rol'] == 1) {
+                    header("Location: admin.php");
+                } else {
+                    header("Location: inicio.php");
+                }
+                exit();
+            } else {
+                $_errMsg = "Usuario y/o Contraseña incorrecta";
+            }
+        } catch (PDOException $e) {
+            $_errMsg = "Error en la base de datos: " . $e->getMessage();
         }
+    } else {
+        $_errMsg = "Por favor, rellena todos los campos";
     }
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso</title>
+    <title>Simon</title>
 </head>
 <body>
-    <h1>Iniciar Sesion</h1>
-    <form action="" method="POST">
-      <label for="usuario">Usuario</label>
-      <input id="usuario" name="usuario" type="text" required/>
-      <br /><br />
-      <label for="password">Contraseña</label>
-      <input id="password" name="password" type="password" required/>      
-      <br /><br />
-      <button type="submit">Entrar</button>
+    <form action="index.php" method="POST">
+        <label for="usuario">Usuario:</label>
+        <input id="usuario" name="usuario" type="text" required/><br><br>
+        <label for="password">Contraseña:</label>
+        <input id="password" name="password" type="password" required/><br><br>
+        <button type="submit">Entrar</button>
     </form>
-    <form action="registrase.php">
-        <p>¿No tienes cuenta?</p>                 
+    <br>
+    <form action="registro.php" method="GET">
         <button type="submit">Registrarse</button>
-    </form>    
-      <br /><br />
-      <?php echo $_errMsg ?>
-      
+    </form>
+    <br>
+    <?php if ($_errMsg): ?>
+        <p style="color: red;"><?= htmlspecialchars($_errMsg) ?></p>
+    <?php endif; ?>
 </body>
 </html>

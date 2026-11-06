@@ -13,9 +13,30 @@
       'samesite' => 'Lax' // Protección Anti-CSRF
     ]);
 
-   
+require_once 'seguridad.php';
+comprobarRol(1);
 
+if (isset($_GET['salir'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit();
+}
+
+$pdo = new PDO("mysql:host=localhost;dbname=bdsimon;charset=utf8mb4", "root", "");
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $num_circulos = (int)$_POST['num_circulos'];
+    $num_colores  = (int)$_POST['num_colores'];
+
+    if ($num_circulos >= 4 && $num_circulos <= 8 && $num_colores >= 4 && $num_colores <= 8) {
+        $stmt = $pdo->prepare("UPDATE configuracion SET num_circulos = ?, num_colores = ? WHERE id = 1");
+        $stmt->execute([$num_circulos, $num_colores]);
+    }
+}
+
+$config = $pdo->query("SELECT * FROM configuracion WHERE id = 1")->fetch(PDO::FETCH_ASSOC);
 ?>
+
 
 <!doctype html>
 <html lang="es">

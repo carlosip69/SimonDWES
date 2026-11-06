@@ -1,11 +1,37 @@
-<?php
-    include 'funcion-color.php';
-    echo'<h2>¡¡Has Perdido!! La combinacion era:</h2>';
-    pintar_circulos($_SESSION['patron']);
-    $_SESSION['circulos_negros']=$negro;
-    $_SESSION['j'] = 0;
-    session_destroy();
-    echo '<form action="formulario.php" method="post">';            
-        echo '<button type="submit" name="Volver">Jugar de nuevo</button>';            
-    echo '</form>';
+ <?php
+require_once 'seguridad.php';
+comprobarRol(0);
+include 'pintar-color.php';
+
+if (isset($_SESSION['patron'])) {
+    $pdo = new PDO("mysql:host=localhost;dbname=bdsimon;charset=utf8mb4", "root", "");
+    $stmt = $pdo->prepare("INSERT INTO jugadas (codigousu, acierto) VALUES (?, 0)");
+    $stmt->execute([$_SESSION['usuario_id']]);
+
+    $patronCorrecto = $_SESSION['patron'];
+    $jugadaElegida  = $_SESSION['circulos_negros'];
+    unset($_SESSION['patron'], $_SESSION['circulos_negros'], $_SESSION['j']);
+} else {
+    header("Location: inicio.php");
+    exit();
+}
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Fallo</title>
+</head>
+<body>
+    <h1>SIMÓN</h1>
+    <h3><?= $_SESSION['nombre'] ?>, has perdido</h3>
+
+    <p>La combinacion era:</p>
+    <?php pintar_circulos($patronCorrecto); ?>
+
+    <p>Su combinacion:</p>
+    <?php pintar_circulos($jugadaElegida); ?>
+
+    <a href="inicio.php"><button>Volver a jugar</button></a>
+</body>
+</html>

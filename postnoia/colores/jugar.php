@@ -1,93 +1,57 @@
 <?php
-    include 'funcion-color.php';
+require_once 'seguridad.php';
+comprobarRol(0);
 
-    //Crea el array con tantos negros como circulos dijo el usuario
-    $negro = array_fill(0, $_SESSION['ncirculos'], '#000000');
+$colores = [
+    'azul' => '#0000FF', 'rojo' => '#FF0000', 'verde' => '#008000', 'amarillo' => '#FFDE21',
+    'naranja' => '#FFA800', 'rosa' => '#FFB5C0', 'morado' => '#9D00FF', 'gris' => '#D3D3D3'
+];
 
+if (!isset($_SESSION['circulos_negros'])) {
+    $_SESSION['circulos_negros'] = array_fill(0, $_SESSION['ncirculos'], '#000000');
+    $_SESSION['j'] = 0;
+}
 
-    // Guardar los círculos en la sesión la primera vez
-    if (!isset($_SESSION['circulos_negros'])) {
-        $_SESSION['circulos_negros'] = $negro;
-        $_SESSION['j'] = 0;
-    }
-    // Si se pulsa un botón
-    if (isset($_POST['color'])) {
-        $colores = array(
-            'azul' => '#0000FF',
-            'rojo' => '#FF0000',
-            'verde' => '#008000',
-            'amarillo' => '#FFDE21',
-            'naranja' => '#FFA800',
-            'rosa' => '#FFB5C0',
-            'morado' => '#9D00FF',
-            'gris' => '#D3D3D3'
-        );
-
-
-    //vamos actualizando la j
+if (isset($_POST['color'])) {
     $j = $_SESSION['j'];
-
-    // por si pulsa los botones despues de comprobar
-        if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
-            $_SESSION['circulos_negros'][$j] = $colores[$_POST['color']];
-            $_SESSION['j']++;
-        }        
+    if (isset($colores[$_POST['color']]) && $j < $_SESSION['ncirculos']) {
+        $_SESSION['circulos_negros'][$j] = $colores[$_POST['color']];
+        $_SESSION['j']++;
     }
-    
-    //numero de aciertos
-    //if()
+}
 
-    $colores_disponiblesnegros = $_SESSION['circulos_negros'];
+if ($_SESSION['j'] >= $_SESSION['ncirculos']) {
+    if ($_SESSION['circulos_negros'] === $_SESSION['patron']) {
+        header("Location: acierto.php");
+    } else {
+        header("Location: fallo.php");
+    }
+    exit();
+}
 
-    // 
-    // session_start();
-
-    // $_SESSION = [];
-
-    // session_destroy();
-
-    // // Volver al formulario inicial
-    // header("Location: formulario.html");
-    // exit;
-    ?>
-
+include 'pintar-color.php';
+?>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Simon</title>
-    </head>
-    <body style="background-color:<?php echo $_COOKIE['cokki_fondo'];?>">        
-        <h1>Jugamos al simon</h1>
-        <?php
-            pintar_circulos($colores_disponiblesnegros);
-        ?>
-        <div class="contenedor-botones">
-            <?php if($_SESSION['j']<$_SESSION['ncirculos']) {                    
-                for($i=0;$i<$_SESSION['ncolores'];$i++){
-                echo '<form method="post">';
-                echo '<button type="submit" name="color" value="'
-                . $_SESSION['nombreColores'][$i]
-                . '" style="background-color: '
-                . $_SESSION['hexaColores'][$i]
-                . '; color: white;">'
-                . $_SESSION['nombreColores'][$i]
-                . '</button>';                       
-                }
-                echo '</form>';                
-                echo '<form action="formulario.php" method="post">';            
-                    echo '<button type="submit" name="Volver">Atras</button>';            
-                echo '</form>'; 
-            }else if($colores_disponiblesnegros==$_SESSION['patron']){
-                 header("Location: ./acierto.php");
-            }else{
-                header("Location: ./fallo.php");            
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SIMÓN</title>
+</head>
+<body>
+    <h1>SIMÓN</h1>
+    <h3><?= $_SESSION['nombre'] ?> pulsa los botones en el orden correspondiente</h3>
 
-            }                
-            ?>
-            <p>Progreso: <?php echo $_SESSION['j']; ?> de <?php echo $_SESSION['ncirculos']; ?> circulos completados </p>
-        </div>        
-    </body>
+    <?php pintar_circulos($_SESSION['circulos_negros']); ?>
+
+    <form method="POST" action="jugar.php">
+        <?php for($i = 0; $i < $_SESSION['ncolores']; $i++): ?>
+            <button type="submit" name="color" value="<?= $_SESSION['nombreColores'][$i] ?>">
+                <?= strtoupper($_SESSION['nombreColores'][$i]) ?>
+            </button>
+        <?php endfor; ?>
+    </form>
+    
+    <p>Progreso: <?= $_SESSION['j'] ?> de <?= $_SESSION['ncirculos'] ?> círculos completados</p>
+</body>
 </html>
 
